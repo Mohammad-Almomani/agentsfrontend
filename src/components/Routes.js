@@ -1,5 +1,5 @@
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+import SignIn from "./authComponents/SignIn";
+import SignUp from "./authComponents/SignUp";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,14 +7,16 @@ import {
   Navigate,
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Items from "./Items";
-import Copyright from "./CopyRight";
-import MenuAppBar from "./navbar";
+import Items from "./listedItems/Items";
+import Copyright from "./footer/CopyRight";
+import MenuAppBar from "./navBar/Navbar";
 import { useEffect } from "react";
 import { useLoginContext } from "../Context/AuthContext";
 import { usePostContext } from "../Context/PostsContext";
 import cookies from "react-cookies";
-import AddPostForm from "./Add-item-form";
+import AddPostForm from "./Forms/Add-item-form";
+import MyCart from "./cart/MyCart";
+import MyFav from "./cart/MyFav";
 
 function AppRoutes() {
   const { isAuthorized, checkToken } = useLoginContext();
@@ -46,6 +48,14 @@ function AppRoutes() {
               <Route
                 path="/listItem/*"
                 element={isAuthorized ? <AddPostForm /> : <Navigate to="/signin" />}
+              />
+               <Route
+                path="/cart/*"
+                element={isAuthorized ? <MyCart /> : <Navigate to="/signin" />}
+              />
+                <Route
+                path="/favorite/*"
+                element={isAuthorized ? <MyFav /> : <Navigate to="/signin" />}
               />
             <Route
               path="/*"

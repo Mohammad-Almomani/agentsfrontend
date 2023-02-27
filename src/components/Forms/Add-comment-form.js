@@ -3,8 +3,8 @@ import axios from "axios";
 import { Form } from "react-bootstrap";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
-import { useLoginContext } from "../Context/AuthContext";
-import { usePostContext } from "../Context/PostsContext";
+import { useLoginContext } from "../../Context/AuthContext";
+import { usePostContext } from "../../Context/PostsContext";
 
 export default function AddCommentForm(props) {
   const { user } = useLoginContext();

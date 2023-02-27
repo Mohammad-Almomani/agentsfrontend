@@ -13,8 +13,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import logo from "./assets/logo-re.png";
-import { useLoginContext } from "../Context/AuthContext";
+import { useLoginContext } from "../../Context/AuthContext";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const drawerWidth = 240;
 
@@ -31,8 +33,7 @@ function Navbar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography data-testid="title" variant="h6" sx={{ my: 2 }}>
-        Facebook Ultra Lite
-        {<img src={logo} alt="logo" style={{ width: "75px" }} />}
+        Agents on Clouds
       </Typography>
       <Divider />
 
@@ -66,7 +67,29 @@ function Navbar(props) {
             sx={{ color: "black" }}
             onClick={() => handleSignOut()}
             component={Link}
-            to="/out"
+            to="/cart"
+            style={{ fontSize: "1rem" }}
+            className="navLink"
+          >
+            Go to Cart
+          </Button>
+          <ListItemText primary={" "} />
+          <Button
+            sx={{ color: "black" }}
+            onClick={() => handleSignOut()}
+            component={Link}
+            to="/favorite"
+            style={{ fontSize: "1rem" }}
+            className="navLink"
+          >
+            Go to favorite
+          </Button>
+          <ListItemText primary={" "} />
+
+          <Button
+            sx={{ color: "black" }}
+            onClick={() => handleSignOut()}
+            component={Link}
             style={{ fontSize: "1rem" }}
             className="navLink"
           >
@@ -131,20 +154,27 @@ function Navbar(props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", sm: "block" },
+              textAlign: "start",
+            }}
           >
-            {<img src={logo} alt="logo" style={{ width: "75px" }} />}
-          </Typography>
-
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
-            Agents On Clouds
+            Agents on Clouds
           </Typography>
           {isAuthorized && (
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <a
+                sx={{ color: "#fff" }}
+                style={{
+                  display: "inline-block",
+                  fontSize: "1.1rem",
+                  margin: "1% 10px",
+                  marginRight: "10%px",
+                }}
+              >
+                {`Hello, ${user.username?.toUpperCase()}`}
+              </a>
               <Button
                 sx={{ color: "#fff" }}
                 component={Link}
@@ -162,31 +192,34 @@ function Navbar(props) {
                 style={{ fontSize: "1rem" }}
                 className="navLink"
               >
-                Add Item
+                Sell Item
               </Button>
 
-              <a
-                sx={{ color: "#fff" }}
-                style={{
-                  display: "inline-block",
-                  fontSize: "1.1rem",
-                  margin: "1% 10px",
-                }}
+              <IconButton
+                color="inherit"
+                aria-label="Go to Favorite"
+                component={Link}
+                to="/favorite"
               >
-                {`Hello, ${user.username?.toUpperCase()}`}
-              </a>
+                <FavoriteIcon />
+              </IconButton>
+              
+              <IconButton
+                color="inherit"
+                aria-label="Go to Cart"
+                component={Link}
+                to="/cart"
+              >
+                <ShoppingCartIcon />
+              </IconButton>
 
-              <Button
-                sx={{ color: "#fff" }}
+              <IconButton
+                color="inherit"
+                aria-label="Go to Cart"
                 onClick={handleSignOut}
-                // component={Link}
-                // as={Link}
-                // to="/signin"
-                style={{ fontSize: "1rem" }}
-                className="navLink"
               >
-                Sign Out
-              </Button>
+                <ExitToAppIcon />
+              </IconButton>
             </Box>
           )}
           {!isAuthorized && (

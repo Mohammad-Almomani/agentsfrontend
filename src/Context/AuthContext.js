@@ -6,6 +6,7 @@ import {
   login,
   logoutHandler,
   signupAction,
+  updateUser
 } from "../actions/AuthActions";
 import { useReducer } from "react";
 import { AuthReducer } from "../reducers/AuthReducer";
@@ -62,6 +63,12 @@ const LoginContextProvider = (props) => {
   const handleSignOut = (gitPosts) => {
     logoutHandler(dispatch);
   };
+
+  const updateUserCart = (data) => {
+    updateUser(dispatch, data);
+  };
+
+    
 
   // forms validation check
 
@@ -169,6 +176,7 @@ const LoginContextProvider = (props) => {
     capabilities: user.capabilities,
     checkToken,
     canDo,
+    updateUserCart,
   };
   return (
     <LoginContext.Provider value={value}>

@@ -3,10 +3,10 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import Button from "@mui/material/Button";
 import Modal from "react-bootstrap/Modal";
-import image from "./assets/img.jpg";
+import image from "../assets/img.jpg";
 import { red } from "@mui/material/colors";
-import AddCommentForm from "./Add-comment-form";
-import { useLoginContext } from "../Context/AuthContext";
+import AddCommentForm from "../Forms/Add-comment-form";
+import { useLoginContext } from "../../Context/AuthContext";
 
 export default function FullScreenModal(props) {
   const { isAuthorized } = useLoginContext();
@@ -40,13 +40,18 @@ export default function FullScreenModal(props) {
           image={props.imgURL ? props.imgURL : image}
           alt={`image of ${props.title}`}
         />
-        <CardContent>
-        <Typography variant="body2" color="text">
-            {props.description}
+       <CardContent sx={{textAlign:"left"}}>
+          <Typography variant="body2" color="text">
+            Description: {props.description}
           </Typography>
           <Typography variant="body2" color="text">
-           Price: {props.price}$
+            Price: {props.price}$
           </Typography>
+
+          <Typography variant="body2" color="text">
+            Tags: {props.category && props.category.join(", ")}
+          </Typography>
+
         </CardContent>
         <CardActions disableSpacing></CardActions>
         <Collapse in={true} timeout="auto" unmountOnExit>
@@ -64,6 +69,7 @@ export default function FullScreenModal(props) {
                 ))}
               </Typography>
             )}
+            {props.usersComments.length === 0 && <p>No Comments Here</p>}
 
             { isAuthorized && <AddCommentForm postID={props.id} gitPosts={props.gitPosts} />}
           </CardContent>

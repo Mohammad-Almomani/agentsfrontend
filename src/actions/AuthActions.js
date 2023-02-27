@@ -64,3 +64,21 @@ export const signupAction = (dispatch, payload) => {
     dispatch({ type: actionType.FAILED_SIGNUP });
   }
 };
+
+
+export const updateUser = (dispatch, payload) => {
+  try {
+    axios
+      .put(`${process.env.REACT_APP_BACKEND}/cartUpdate`, payload, {
+        headers: {
+          Authorization: `Bearer ${cookies.load("token")}`,
+        },
+      })
+      .then((res) => {
+        dispatch({ type: actionType.GET_PROFILE, payload: res.data });
+      })
+      .catch((e) => dispatch({ type: actionType.FAILED_SIGNUP }));
+  } catch (e) {
+    dispatch({ type: actionType.FAILED_SIGNUP });
+  }
+};

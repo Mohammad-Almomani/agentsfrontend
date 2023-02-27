@@ -1,11 +1,34 @@
-import { TextField } from "@mui/material";
+import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React from "react";
 import { Form } from "react-bootstrap";
 import Button from "@mui/material/Button";
 import Modal from "react-bootstrap/Modal";
-import { useLoginContext } from "../Context/AuthContext";
-import { usePostContext } from "../Context/PostsContext";
-import { editPostAction } from "../actions/PostsActions";
+import { useLoginContext } from "../../Context/AuthContext";
+import { usePostContext } from "../../Context/PostsContext";
+import { editPostAction } from "../../actions/PostsActions";
+import { useTheme } from "@emotion/react";
+
+const Catigo = [
+  "Electronics",
+  "Clothes",
+  "Furniture",
+  "Books",
+  "Sports",
+  "Toys",
+  "Tools",
+  "Other",
+];
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 export default function EditItemModal(props) {
   const { user } = useLoginContext();
@@ -30,6 +53,19 @@ export default function EditItemModal(props) {
     e.target.reset();
   };
 
+  // const theme = useTheme();
+  const [Category, setCategory] = React.useState([]);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCategory(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
   return (
     <>
       <Modal
@@ -38,7 +74,7 @@ export default function EditItemModal(props) {
         onHide={props.handleClose}
       >
         <Modal.Header closeButton></Modal.Header>
-        <Form onSubmit={editPost} style={{ margin: "3% 30%" }}>
+        <Form onSubmit={editPost} style={{ margin: "3% 5%" }}>
           <h3>Edit Post</h3>
           <TextField
             margin="normal"
@@ -48,7 +84,7 @@ export default function EditItemModal(props) {
             type="text"
             name="title"
             rows={3}
-            placeholder={`${props.title}`}
+            defaultValue={props.title}
           />
 
           <TextField
@@ -59,7 +95,7 @@ export default function EditItemModal(props) {
             type="text"
             id="description"
             rows={3}
-            placeholder={props.description}
+            defaultValue={props.description}
           />
 
           <TextField
@@ -69,10 +105,29 @@ export default function EditItemModal(props) {
             label="New price (Optional)"
             type="number"
             id="price"
+            defaultValue={props.price}
             rows={3}
-            placeholder={props.price}
+            InputProps={{ inputProps: { min: 0 } }}
           />
-
+          <InputLabel id="multiple-cati-label">
+            Categories (Can select more than one)
+          </InputLabel>
+          <Select
+            labelId="multiple-cati-label"
+            id="demo-multiple-name"
+            multiple
+            value={Category}
+            onChange={handleChange}
+            MenuProps={MenuProps}
+            defaultValue={props.category}
+            fullWidth
+          >
+            {Catigo.map((name) => (
+              <MenuItem key={name} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
           <TextField
             margin="normal"
             fullWidth

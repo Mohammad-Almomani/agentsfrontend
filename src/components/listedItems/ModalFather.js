@@ -10,35 +10,54 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
-import AddCommentForm from "./Add-comment-form";
 import { Dropdown } from "react-bootstrap";
-import image from "./assets/img.jpg";
-import EditItemModal from "./EditModal";
-import { useLoginContext } from "../Context/AuthContext";
-import { usePostContext } from "../Context/PostsContext";
-import { deletePostAction } from "../actions/PostsActions";
+import image from "../assets/img.jpg";
+import { useLoginContext } from "../../Context/AuthContext";
+import { usePostContext } from "../../Context/PostsContext";
+import { deletePostAction } from "../../actions/PostsActions";
 import FullScreenModal from "./FullScreenModal";
-import { Button } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
 
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
+import EditItemModal from "./EditModalForm";
 
 export default function ModalFather(props) {
   let [show, setShow] = useState(false);
   let [showFull, setShowFull] = useState(false);
 
-  const { user, canDo } = useLoginContext();
+  const { user, canDo, isAuthorized, updateUserCart } = useLoginContext();
   const { gitPosts } = usePostContext();
-
   const handleShow = () => {
     setShow(!show);
   };
   const handleShowFull = () => {
     setShowFull(!showFull);
   };
+
+  const addToCart = () => {
+    let cart = [...user?.cart] || [];
+    if (cart.includes(props.id)) {
+      cart = cart.filter((item) => item !== props.id);
+    } else {
+      cart.push(props.id);
+    }
+    updateUserCart({cart: cart});
+  };
+
+  const addToFav = () => {
+    let favorite = [...user?.favorite] || [];
+    if (favorite.includes(props.id)) {
+      favorite = favorite.filter((item) => item !== props.id);
+    } else {
+      favorite.push(props.id);
+    }
+    updateUserCart({favorite: favorite});
+  };
+
 
   return (
     <div>
@@ -88,6 +107,7 @@ export default function ModalFather(props) {
                 show={show}
                 handleClose={handleShow}
                 imgURL={props.imgURL}
+                category={props.category}
               />
               <FullScreenModal
                 title={props.title}
@@ -99,6 +119,7 @@ export default function ModalFather(props) {
                 imgURL={props.imgURL}
                 usersComments={props.usersComments}
                 username={props.username}
+                category={props.category}
               />
             </>
           }
@@ -112,13 +133,18 @@ export default function ModalFather(props) {
           alt={`image of ${props.title}`}
           onClick={() => handleShowFull()}
         />
-        <CardContent>
+        <CardContent sx={{textAlign:"left"}}>
           <Typography variant="body2" color="text">
-            {props.description}
+            Description: {props.description}
           </Typography>
           <Typography variant="body2" color="text">
             Price: {props.price}$
           </Typography>
+
+          <Typography variant="body2" color="text">
+            Tags: {props.category && props.category.join(", ")}
+          </Typography>
+
         </CardContent>
         <CardActions disableSpacing></CardActions>
         <Collapse in={true} timeout="auto" unmountOnExit>
@@ -139,20 +165,52 @@ export default function ModalFather(props) {
                 )}
               </Typography>
             )}
-            
+            {props.usersComments.length === 0 && <p>No Comments Here</p>}
+
             <Button
               variant="contained"
-              sx={{ mt: 3, mb: 2, marginRight : 5 }}
+              sx={{ mt: 3, mb: 2, marginRight: 5 }}
               onClick={handleShowFull}
             >
               See More
             </Button>
-            
-            <AddShoppingCartIcon sx={{cursor: "pointer", marginRight : 1}} />
+            {isAuthorized && (
+              <>
+                {user?.cart?.includes(props.id) ? (
+                  <Tooltip title="Remove From Cart">
+                    <IconButton onClick={addToCart}>
+                      <RemoveShoppingCartIcon 
+                      />
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Add to Cart">
+                  <IconButton onClick={addToCart}>
+                  <AddShoppingCartIcon
+                  />
+                   </IconButton>
+                  </Tooltip>
+                )}
+              </>
+            )}
 
-            <FavoriteBorderIcon sx={{cursor: "pointer"}} />
-
-
+            {isAuthorized && (
+              <>
+                {user?.favorite?.includes(props.id) ? (
+                  <Tooltip title="Remove From Fav">
+                  <IconButton onClick={addToFav}>
+                  <FavoriteIcon sx={{color: "red"}}/>
+                  </IconButton>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Add to Fav">
+                  <IconButton onClick={addToFav}>
+                  <FavoriteBorderIcon />
+                  </IconButton>
+                  </Tooltip>
+                )}
+              </>
+            )}
           </CardContent>
         </Collapse>
       </Card>
