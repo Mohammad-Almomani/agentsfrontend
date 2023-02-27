@@ -36,3 +36,49 @@
     transform: rotate(360deg);
   }
 }
+
+.container {
+  padding-bottom: 70px;
+  padding-top: 20px;
+}
+
+.email-input {
+  width: 300px;
+  padding: 5px 10px;
+}
+
+.message {
+  font-size: 15px;
+  text-align: left;
+}
+
+.success {
+  color: blue;
+}
+
+.error {
+  color: red;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+  font-size: 1.5rem;
+}
+
+.navLink{
+/* color: white !important; */
+}
+.navLink:hover{
+color: #08586e !important;
+}
+
+
+
+/* 
+.header {
+  display: "flex" !important;
+  justify-content: "center" !important;
+  align-items: "center" !important;
+  gap: "2%" !important;
+} */
