@@ -95,7 +95,7 @@ export default function FullScreenModal(props) {
                 alignItems="center"
                 // spacing={3}
               >
-                <Grid item lg={5}>
+                <Grid item sm={5}>
                   <CardMedia
                     component="img"
                     // sx={{ width: 170 }}
@@ -104,7 +104,7 @@ export default function FullScreenModal(props) {
                   />
                 </Grid>
 
-                <Grid item lg={7} style={{ fontSize: "20px" }}>
+                <Grid item sm={7} style={{ fontSize: "20px" }}>
                   <Grid item>Item: {props.title}</Grid>
                   <Grid item>Description: {props.description}</Grid>
                   <Grid item>Seller: {props.username}</Grid>
@@ -162,7 +162,7 @@ export default function FullScreenModal(props) {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid item lg={12}>
+                <Grid item sm={12}>
                   <CardContent>
                     <Typography style={{ fontWeight: "bolder" }} paragraph>
                       Comments:
@@ -181,7 +181,6 @@ export default function FullScreenModal(props) {
                             container
                             justifyContent="start"
                             alignItems="center"
-                            spacing={0}
                             sx={{ mb: 2 }}
                             key={idx}
                           >

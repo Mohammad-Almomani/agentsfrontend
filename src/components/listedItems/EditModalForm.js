@@ -1,5 +1,5 @@
 import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "@mui/material/Button";
 import Modal from "react-bootstrap/Modal";
@@ -33,6 +33,7 @@ const MenuProps = {
 export default function EditItemModal(props) {
   const { user } = useLoginContext();
   const { gitPosts } = usePostContext();
+  const [image, setImage] = useState(false);
 
   const id = props.id;
   const handleClose = () => {
@@ -45,25 +46,25 @@ export default function EditItemModal(props) {
       title: e.target.title.value || props.title,
       description: e.target.description.value || props.description,
       price: e.target.price.value || props.price,
-      imgURL: e.target.imgURL.value || props.imgURL,
+      imgURL: image,
       username: user.username,
+      // stringy the array so the multer doesn't destroy it
+      category: JSON.stringify(Category),
       userID: user.id,
     };
+    if (!image) delete post.imgURL;
+    console.log(post);
     editPostAction(id, post, gitPosts);
     e.target.reset();
   };
 
-  // const theme = useTheme();
-  const [Category, setCategory] = React.useState([]);
+  const [Category, setCategory] = React.useState(props.category);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setCategory(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setCategory(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
@@ -118,27 +119,31 @@ export default function EditItemModal(props) {
             ))}
           </Select>
           <TextField
+            // margin="normal"
+            // fullWidth
+            // name="imgURL"
+            // label="New Image URL (Optional)"
+            // type="text"
+            // id="imgURL"
+            // rows={3}
+            // placeholder={props.imgURL}
             margin="normal"
             fullWidth
-            name="imgURL"
-            label="New Image URL (Optional)"
-            type="text"
-            id="imgURL"
-            rows={3}
-            placeholder={props.imgURL}
+            type="file"
+            onChange={(e) => setImage(e.target.files[0])}
           />
-            
-                      <TextField
-                        margin="normal"
-                        fullWidth
-                        name="description"
-                        label="New Description (Optional)"
-                        type="text"
-                        id="description"
-                        multiline
-                        rows={3}
-                        defaultValue={props.description}
-                      />
+
+          <TextField
+            margin="normal"
+            fullWidth
+            name="description"
+            label="New Description (Optional)"
+            type="text"
+            id="description"
+            multiline
+            rows={3}
+            defaultValue={props.description}
+          />
 
           <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
             Submit

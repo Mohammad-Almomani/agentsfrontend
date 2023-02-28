@@ -36,30 +36,29 @@ export const logoutHandler = (dispatch) => {
 
 export const getUserProfile = async (dispatch) => {
   console.log("getting user profile");
-try {
-  
-  await axios
-    .get(`${process.env.REACT_APP_BACKEND}/profile`, {
-      headers: {
-        Authorization: `Bearer ${cookies.load("token")}`,
-      },
-    })
-    .then((res) => {
-      dispatch({ type: actionType.GET_PROFILE, payload: res.data });
-      console.log("done getting user info");
+  try {
+    await axios
+      .get(`${process.env.REACT_APP_BACKEND}/profile`, {
+        headers: {
+          Authorization: `Bearer ${cookies.load("token")}`,
+        },
+      })
+      .then((res) => {
+        dispatch({ type: actionType.GET_PROFILE, payload: res.data });
+        console.log("done getting user info");
+      });
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Something went wrong!",
     });
-} catch (error) {
-  Swal.fire({
-    icon: "error",
-    title: "Oops...",
-    text: "Something went wrong!",
-  });
-  console.log(error)
-  cookies.remove("userInfo");
-  cookies.remove("token");
-  cookies.remove("capabilities");
-  dispatch({ type: actionType.FAILED_LOGIN })
-}
+    console.log(error);
+    cookies.remove("userInfo");
+    cookies.remove("token");
+    cookies.remove("capabilities");
+    dispatch({ type: actionType.FAILED_LOGIN });
+  }
 };
 
 export const signupAction = (dispatch, payload) => {
@@ -78,7 +77,6 @@ export const signupAction = (dispatch, payload) => {
     dispatch({ type: actionType.FAILED_SIGNUP });
   }
 };
-
 
 export const updateUser = (dispatch, payload) => {
   try {

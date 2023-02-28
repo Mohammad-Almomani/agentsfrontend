@@ -1,4 +1,4 @@
-import { actionType } from '../types/AuthActionTypes';
+import { actionType } from "../types/AuthActionTypes";
 
 export const PostReducer = (state, action) => {
   switch (action.type) {
@@ -10,4 +10,4 @@ export const PostReducer = (state, action) => {
     default:
       return state;
   }
-}
+};
