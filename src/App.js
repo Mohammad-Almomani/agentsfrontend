@@ -1,6 +1,6 @@
 import "./App.css";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 import LoginContextProvider from "./Context/AuthContext";
 import PostContextProvider from "./Context/PostsContext";
