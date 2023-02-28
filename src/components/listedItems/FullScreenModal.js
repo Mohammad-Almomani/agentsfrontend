@@ -71,7 +71,7 @@ export default function FullScreenModal(props) {
         size="lg"
       >
         <div>
-          <Card sm={{ display: "flex" }}>
+          <Card sx={{ display: "flex" }}  >
             <CardHeader
               action={
                 <Tooltip title="Remove From Cart">
@@ -86,16 +86,20 @@ export default function FullScreenModal(props) {
               <Grid
                 container
                 alignItems="center"
+                spacing={1}
               >
-                <Grid item sm={5}>
+                <Grid item md={6} sm={12}>
                   <CardMedia
                     component="img"
                     image={props.imgURL || image}
                     alt="Item Image"
+                    height={250}
+                    sx={{ objectFit: "contain" }}
+                    // width={100}
                   />
                 </Grid>
 
-                <Grid item sm={7} style={{ fontSize: "20px" }}>
+                <Grid item md={6} sm={12} style={{ fontSize: "20px", marginLeft: "0" }}>
                   <Grid item>Item: {props.title}</Grid>
                   <Grid item>Description: {props.description}</Grid>
                   <Grid item>Seller: {props.username}</Grid>
@@ -106,13 +110,13 @@ export default function FullScreenModal(props) {
                         justifyContent="space-between"
                         spacing={1}
                       >
-                        <Grid item sm={8}>
+                        <Grid item sm={6}>
                           <p style={{ fontSize: "20px" }}>
                             {" "}
                             Price: {props.price}$
                           </p>
                         </Grid>
-                        <Grid item sm={3}>
+                        <Grid item sm={5}>
                           {isAuthorized && (
                             <>
                               {user?.cart?.includes(props.id) ? (
@@ -175,8 +179,9 @@ export default function FullScreenModal(props) {
                             sx={{ mb: 2 }}
                             key={idx}
                             ref={bottomRef}
+                            spacing={1}
                           >
-                            <Grid item sm={1}>
+                            <Grid item md={1}>
                               <Avatar
                                 sx={{ bgcolor: red[500] }}
                                 aria-label="props."
@@ -185,11 +190,11 @@ export default function FullScreenModal(props) {
                                   "U"}
                               </Avatar>
                             </Grid>
-                            <Grid item sm={8}>
+                            <Grid item md={7}>
                               {com.commentAuthor.toUpperCase()}: {com.comment}
                             </Grid>
 
-                            <Grid item sm={2}>
+                            <Grid item md={3}>
                               <Rating
                                 name="disabled"
                                 value={Math.floor(Math.random() * 2 + 3)}
@@ -197,7 +202,7 @@ export default function FullScreenModal(props) {
                               />
                             </Grid>
 
-                            <Grid item sm={1}>
+                            <Grid item md={1}>
                               <Tooltip title="Verified Purchase">
                                 <IconButton>
                                   <VerifiedIcon />

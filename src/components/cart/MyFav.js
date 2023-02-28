@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -12,11 +12,14 @@ export default function MyFav() {
   const { post } = usePostContext();
 
   return (
-    <Row style={{ marginLeft: "7.5%" }} xs={1} sm={2} md={3} className="g-4">
+    <Container maxWidth="xl"  justifyContent="center" alignItems="center">
+      <h1> My Favorite</h1>
+    <Grid container spacing={2} mt={5}>
+
       {post?.map((item, idx) => {
         if (user?.favorite?.includes(item.id)) {
           return (
-            <Col key={idx}>
+            <Grid item sm={6} md={4} xl={3} key={idx} >
               <ModalFather
                 username={item.username}
                 description={item.description}
@@ -27,7 +30,7 @@ export default function MyFav() {
                 imgURL={item.imgURL[0]}
                 category={item.category}
               />
-            </Col>
+            </Grid>
           );
         } else {
           return null;
@@ -62,6 +65,7 @@ export default function MyFav() {
           </Grid>
         </>
       )}
-    </Row>
+    </Grid>
+    </Container>
   );
 }

@@ -3,7 +3,6 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -58,7 +57,7 @@ export default function ModalFather(props) {
 
   return (
     <div>
-      <Card sx={{ maxWidth: 380 }}>
+      <Card sx={{ maxWidth: 380 }} >
         <CardHeader
           action={
             <>
@@ -125,7 +124,6 @@ export default function ModalFather(props) {
           component="img"
           height="200"
           style={{objectFit: "contain"}}
-          // objectFit="contain"
           image={props.imgURL ? props.imgURL : image}
           alt={`image of ${props.title}`}
           onClick={() => handleShowFull()}
@@ -149,10 +147,10 @@ export default function ModalFather(props) {
               // alignItems="space-around"
               spacing={1}
             >
-              <Grid item sm={8}>
+              <Grid item sm={6}>
                 <p style={{ fontSize: "20px" }}> Price: {props.price}$</p>
               </Grid>
-              <Grid item sm={3}>
+              <Grid item sm={5}>
                 {isAuthorized && (
                   <>
                     {user?.cart?.includes(props.id) ? (
@@ -191,12 +189,11 @@ export default function ModalFather(props) {
             </Grid>
           </Typography>
         </CardContent>
-        <CardActions disableSpacing></CardActions>
         <Collapse in={true} timeout="auto" unmountOnExit>
           <CardContent>
             <Button
               variant="contained"
-              sx={{ mb: 2, marginRight: 7 }}
+              sx={{ mb: 2 }}
               onClick={handleShowFull}
             >
               Learn More
