@@ -8,7 +8,7 @@ import { usePostContext } from "../../Context/PostsContext";
 
 export default function AddCommentForm(props) {
   const { user } = useLoginContext();
-  const { gitPosts } = usePostContext();
+  const { gitPosts, addedComment } = usePostContext();
 
   const addComment = async (e) => {
     e.preventDefault();
@@ -25,7 +25,8 @@ export default function AddCommentForm(props) {
       );
       console.log(qq.data);
       e.target.reset();
-      gitPosts();
+        addedComment(qq.data, props.idx);
+      // gitPosts();
     } catch (error) {
       console.log(error);
     }

@@ -14,12 +14,19 @@ const PostContextProvider = (props) => {
   };
   const [posts, dispatch] = useReducer(PostReducer, initialState);
 
-  const gitPosts = async () => {
-    gitPostsAction(dispatch);
+  const gitPosts = async (post) => {
+    gitPostsAction(dispatch, post);
+  };
+
+  const addedComment = async (updatedPost, idx) => {
+    let newPosts = [...posts.post];
+    newPosts[idx] = updatedPost;
+    dispatch({ type: "ADD_COMMENT", payload: newPosts});
   };
 
   const value = {
     gitPosts,
+    addedComment,
     post: posts.post,
   };
   return (

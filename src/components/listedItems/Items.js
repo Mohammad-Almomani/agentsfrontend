@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Col, Row } from "react-bootstrap";
-import ModalFather from "./ModalFather";
+import ModalFather from "./ItemCard";
 import { useLoginContext } from "../../Context/AuthContext";
 import { usePostContext } from "../../Context/PostsContext";
 import { useTheme } from "@mui/material/styles";
@@ -137,14 +137,16 @@ export default function Items() {
                     id={pos.id}
                     usersComments={pos.usersComments}
                     title={pos.title}
-                    imgURL={pos.imgURL[0]}
+                    imgURL={pos?.imgURL[0]}
                     category={pos.category}
+                    idx={idx}
                   />
                 </Col>
               );
             }
           })}
       </Row>
+      {/* eslint-disable  */}
       <a style={{ display: "block", marginTop: "2%" }}>
         You are done here? don't forget to
         {<Button onClick={handleSignOut}>Sign Out</Button>}

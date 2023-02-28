@@ -51,22 +51,22 @@ export default function MyCart() {
                     <CardMedia
                       component="img"
                       sx={{ width: 170 }}
-                      image={item.imgURL || image}
+                      image={item.imgURL[0] || image}
                       alt="Item Image"
                     />
                   </Grid>
 
-                  <Grid item lg={2}>
+                  <Grid item sm={2}>
                     Item: {item.title}
                   </Grid>
 
-                  <Grid item lg={2}>
+                  <Grid item sm={2}>
                     Seller: {item.username}
                   </Grid>
-                  <Grid item lg={2}>
+                  <Grid item sm={2}>
                     Price: {item.price}$
                   </Grid>
-                  <Grid item lg={2}>
+                  <Grid item sm={2}>
                     <Button
                       type="submit"
                       fullWidth

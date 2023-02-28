@@ -53,9 +53,9 @@ export default function EditItemModal(props) {
       userID: user.id,
     };
     if (!image) delete post.imgURL;
-    console.log(post);
     editPostAction(id, post, gitPosts);
     e.target.reset();
+    handleClose();
   };
 
   const [Category, setCategory] = React.useState(props.category);
@@ -119,14 +119,6 @@ export default function EditItemModal(props) {
             ))}
           </Select>
           <TextField
-            // margin="normal"
-            // fullWidth
-            // name="imgURL"
-            // label="New Image URL (Optional)"
-            // type="text"
-            // id="imgURL"
-            // rows={3}
-            // placeholder={props.imgURL}
             margin="normal"
             fullWidth
             type="file"
