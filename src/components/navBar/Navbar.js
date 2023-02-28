@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { useLoginContext } from "../../Context/AuthContext";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const drawerWidth = 240;
 
@@ -203,7 +203,7 @@ function Navbar(props) {
               >
                 <FavoriteIcon />
               </IconButton>
-              
+
               <IconButton
                 color="inherit"
                 aria-label="Go to Cart"

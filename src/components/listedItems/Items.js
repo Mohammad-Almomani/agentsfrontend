@@ -1,11 +1,9 @@
 import * as React from "react";
 import { Col, Row } from "react-bootstrap";
 import ModalFather from "./ModalFather";
-// import { Button, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
 import { useLoginContext } from "../../Context/AuthContext";
 import { usePostContext } from "../../Context/PostsContext";
 import { useTheme } from "@mui/material/styles";
-import HomeCarousal from "../carousal/HomeCarousal";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -63,49 +61,55 @@ export default function Items() {
 
   return (
     <>
-      {/* <HomeCarousal /> */}
       <FormControl sx={{ m: 1, width: 500 }}>
-      <Grid container spacing={2}>
-        <Grid item sm={6} xs={12}>
-        <InputLabel id="demo-multiple-name-label">Categories</InputLabel>
-        <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
-          value={Category}
-          onChange={handleChange}
-          input={<OutlinedInput label="Categories" />}
-          MenuProps={MenuProps}
-          fullWidth
-        >
-          {Catigo.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, Category, theme)}
+        <Grid container spacing={2}>
+          <Grid item sm={6} xs={12}>
+            <InputLabel id="demo-multiple-name-label">Categories</InputLabel>
+            <Select
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              multiple
+              value={Category}
+              onChange={handleChange}
+              input={<OutlinedInput label="Categories" />}
+              MenuProps={MenuProps}
+              fullWidth
             >
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-        </Grid>
-        <Grid item sm={6} xs={12}>
-        <Button
-          variant="contained"
-          sx={{ m: 1 }}
-          onClick={() => setCategory([])}
-        >
-          Clear Filters
-        </Button>
-        </Grid>
+              {Catigo.map((name) => (
+                <MenuItem
+                  key={name}
+                  value={name}
+                  style={getStyles(name, Category, theme)}
+                >
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid item sm={6} xs={12}>
+            <Button
+              variant="contained"
+              sx={{ m: 1 }}
+              onClick={() => setCategory([])}
+            >
+              Clear Filters
+            </Button>
+          </Grid>
         </Grid>
       </FormControl>
 
-      <Row style={{ marginLeft: "7.5%" }} xs={1} sm={2} md={3} className="g-4">
+      <Row
+        style={{ marginLeft: "7.5%" }}
+        xs={1}
+        sm={2}
+        md={2}
+        lg={3}
+        className="g-4"
+      >
         {post &&
           post.map((pos, idx) => {
             if (Category.length > 0) {
-              if ( Category.some(item => pos.category.includes(item))){
+              if (Category.some((item) => pos.category.includes(item))) {
                 return (
                   <Col key={idx}>
                     <ModalFather
@@ -115,7 +119,7 @@ export default function Items() {
                       id={pos.id}
                       usersComments={pos.usersComments}
                       title={pos.title}
-                      imgURL={pos.imgURL}
+                      imgURL={pos.imgURL[0]}
                       category={pos.category}
                     />
                   </Col>
@@ -127,14 +131,13 @@ export default function Items() {
               return (
                 <Col key={idx}>
                   <ModalFather
-
                     username={pos.username}
                     description={pos.description}
                     price={pos.price}
                     id={pos.id}
                     usersComments={pos.usersComments}
                     title={pos.title}
-                    imgURL={pos.imgURL}
+                    imgURL={pos.imgURL[0]}
                     category={pos.category}
                   />
                 </Col>

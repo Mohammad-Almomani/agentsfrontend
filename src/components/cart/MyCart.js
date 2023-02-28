@@ -6,7 +6,7 @@ import { usePostContext } from "../../Context/PostsContext";
 import image from "../assets/img.jpg";
 import empty from "./assets/empty_cart.png";
 import { Link } from "react-router-dom";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function MyCart() {
   const { user, updateUserCart } = useLoginContext();
@@ -16,13 +16,12 @@ export default function MyCart() {
   useEffect(() => {
     let total = 0;
     post?.map((item) => {
-        if (user?.cart?.includes(item.id)) {
-            total += item.price;
-        }
+      if (user?.cart?.includes(item.id)) {
+        total += item.price;
+      }
     });
     setPrice(total);
-    }, [user?.cart]);
-    
+  }, [user?.cart]);
 
   const addToCart = (id) => {
     let cart = [...user?.cart] || [];
@@ -75,7 +74,7 @@ export default function MyCart() {
                       sx={{ mt: 3, mb: 2 }}
                       onClick={() => addToCart(item.id)}
                     >
-                      Remove <DeleteIcon sx={{ml:2}} />
+                      Remove <DeleteIcon sx={{ ml: 2 }} />
                     </Button>
                   </Grid>
                 </Grid>
@@ -85,7 +84,13 @@ export default function MyCart() {
         }
       })}
       {user?.cart?.length > 0 && (
-        <Grid container justifyContent="center" alignItems="center" sx={{marginTop:1}} spacing={3}>
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          sx={{ marginTop: 1 }}
+          spacing={3}
+        >
           <Grid item sz={12}>
             Total Price: {price}$
           </Grid>

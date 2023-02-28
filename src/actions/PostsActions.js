@@ -4,10 +4,12 @@ import Swal from "sweetalert2";
 import { actionType } from "../types/AuthActionTypes";
 
 export const editPostAction = async (id, post, gitPosts) => {
+  // add content type to the header
   await axios
     .put(`${process.env.REACT_APP_BACKEND}/post/${id}`, post, {
       headers: {
         Authorization: `Bearer ${cookies.load("token")}`,
+        "Content-Type": "multipart/form-data",
       },
     })
     .then((res) => {

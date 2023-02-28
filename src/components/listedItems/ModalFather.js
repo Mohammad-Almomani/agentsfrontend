@@ -43,7 +43,7 @@ export default function ModalFather(props) {
     } else {
       cart.push(props.id);
     }
-    updateUserCart({cart: cart});
+    updateUserCart({ cart: cart });
   };
 
   const addToFav = () => {
@@ -53,19 +53,13 @@ export default function ModalFather(props) {
     } else {
       favorite.push(props.id);
     }
-    updateUserCart({favorite: favorite});
+    updateUserCart({ favorite: favorite });
   };
-
 
   return (
     <div>
       <Card sx={{ maxWidth: 380 }}>
         <CardHeader
-          // avatar={
-          //   <Avatar sx={{ bgcolor: red[500] }} aria-label="props.">
-          //     {props.title.charAt(0).toUpperCase() || "P"}
-          //   </Avatar>
-          // }
           action={
             <>
               {canDo(user.username, props.username) && (
@@ -91,9 +85,11 @@ export default function ModalFather(props) {
                     >
                       Delete Post
                     </Dropdown.Item>
-                   { user.username === props.username && <Dropdown.Item onClick={() => handleShow()}>
-                      Edit
-                    </Dropdown.Item>}
+                    {user.username === props.username && (
+                      <Dropdown.Item onClick={() => handleShow()}>
+                        Edit
+                      </Dropdown.Item>
+                    )}
                   </Dropdown.Menu>
                 </Dropdown>
               )}
@@ -123,21 +119,20 @@ export default function ModalFather(props) {
           }
           title={props.title}
         />
-       
+
         <CardMedia
           component="img"
-          height="194"
+          height="200"
           image={props.imgURL ? props.imgURL : image}
           alt={`image of ${props.title}`}
           onClick={() => handleShowFull()}
         />
-        <CardContent sx={{textAlign:"left"}}>
-
-          <Typography variant="body2" color="text" sx={{mt:2, mb: 1}}>
+        <CardContent sx={{ textAlign: "left" }}>
+          <Typography variant="body2" color="text" sx={{ mt: 2, mb: 1 }}>
             Description: {props.description}
           </Typography>
-        <Typography variant="body2" color="text" sx={{ mb: 1}}>
-        Seller: {props.username}
+          <Typography variant="body2" color="text" sx={{ mb: 1 }}>
+            Seller: {props.username}
           </Typography>
 
           <Typography variant="body2" color="text">
@@ -145,53 +140,50 @@ export default function ModalFather(props) {
           </Typography>
           <br />
           <Typography variant="body" color="text">
-            <Grid   container
-                  justifyContent="space-between"
-                  // alignItems="space-around"
-                  spacing={1}
-                  >
+            <Grid
+              container
+              justifyContent="space-between"
+              // alignItems="space-around"
+              spacing={1}
+            >
               <Grid item sm={8}>
-           <p style={{fontSize: "20px"}}> Price: {props.price}$</p>
-
+                <p style={{ fontSize: "20px" }}> Price: {props.price}$</p>
               </Grid>
               <Grid item sm={3}>
-
-            {isAuthorized && (
-              <>
-                {user?.cart?.includes(props.id) ? (
-                  <Tooltip title="Remove From Cart">
-                    <IconButton onClick={addToCart}>
-                      <RemoveShoppingCartIcon 
-                      />
-                    </IconButton>
-                  </Tooltip>
-                ) : (
-                  <Tooltip title="Add to Cart">
-                  <IconButton onClick={addToCart}>
-                  <AddShoppingCartIcon
-                  />
-                   </IconButton>
-                  </Tooltip>
+                {isAuthorized && (
+                  <>
+                    {user?.cart?.includes(props.id) ? (
+                      <Tooltip title="Remove From Cart">
+                        <IconButton onClick={addToCart}>
+                          <RemoveShoppingCartIcon />
+                        </IconButton>
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title="Add to Cart">
+                        <IconButton onClick={addToCart}>
+                          <AddShoppingCartIcon />
+                        </IconButton>
+                      </Tooltip>
+                    )}
+                  </>
                 )}
-              </>
-            )}
-            {isAuthorized && (
-              <>
-                {user?.favorite?.includes(props.id) ? (
-                  <Tooltip title="Remove From Fav">
-                  <IconButton onClick={addToFav}>
-                  <FavoriteIcon sx={{color: "red"}}/>
-                  </IconButton>
-                  </Tooltip>
-                ) : (
-                  <Tooltip title="Add to Fav">
-                  <IconButton onClick={addToFav}>
-                  <FavoriteBorderIcon />
-                  </IconButton>
-                  </Tooltip>
+                {isAuthorized && (
+                  <>
+                    {user?.favorite?.includes(props.id) ? (
+                      <Tooltip title="Remove From Fav">
+                        <IconButton onClick={addToFav}>
+                          <FavoriteIcon sx={{ color: "red" }} />
+                        </IconButton>
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title="Add to Fav">
+                        <IconButton onClick={addToFav}>
+                          <FavoriteBorderIcon />
+                        </IconButton>
+                      </Tooltip>
+                    )}
+                  </>
                 )}
-              </>
-            )}
               </Grid>
             </Grid>
           </Typography>
@@ -206,8 +198,6 @@ export default function ModalFather(props) {
             >
               Learn More
             </Button>
-            
-            
           </CardContent>
         </Collapse>
       </Card>

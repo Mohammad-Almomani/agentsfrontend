@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Button, Grid, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
+import {
+  Button,
+  Grid,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField,
+} from "@mui/material";
 import { Form } from "react-bootstrap";
 import cookies from "react-cookies";
 import Swal from "sweetalert2";
@@ -38,14 +46,13 @@ function getStyles(Cati, Category, theme) {
   };
 }
 
-
 export default function AddPostForm() {
   const { user } = useLoginContext();
   const { gitPosts } = usePostContext();
+  const [image, setImage] = useState({});
 
   const theme = useTheme();
   const [Category, setCategory] = React.useState([]);
-
 
   const handleChange = (event) => {
     const {
@@ -57,24 +64,23 @@ export default function AddPostForm() {
     );
   };
 
-
   const addPost = async (e) => {
     e.preventDefault();
-    console.log(e.target.imgURL.value);
     const post = {
       title: e.target.title.value,
       description: e.target.description.value,
       price: e.target.price.value,
-      imgURL: e.target.imgURL.value,
+      imgURL: image,
       username: user.username,
       userID: user.id,
-      category: Category,
+      category: JSON.stringify(Category),
     };
     console.log(post);
     await axios
       .post(`${process.env.REACT_APP_BACKEND}/post`, post, {
         headers: {
           Authorization: `Bearer ${cookies.load("token")}`,
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
@@ -124,12 +130,14 @@ export default function AddPostForm() {
           type="number"
           id="price"
           required
-          InputProps={{ inputProps: { min: 0} }}
+          InputProps={{ inputProps: { min: 0 } }}
         />
 
-          <InputLabel id="multiple-cati-label">Categories (Can select more than one)</InputLabel>
+        <InputLabel id="multiple-cati-label">
+          Categories (Can select more than one)
+        </InputLabel>
         <Select
-        labelId="multiple-cati-label"
+          labelId="multiple-cati-label"
           id="demo-multiple-name"
           multiple
           value={Category}
@@ -153,10 +161,8 @@ export default function AddPostForm() {
         <TextField
           margin="normal"
           fullWidth
-          name="imgURL"
-          label="Enter Image URL here (Optional)  .jpg .png .webp ..."
-          type="url"
-          id="imgURL"
+          type="file"
+          onChange={(e) => setImage(e.target.files[0])}
         />
 
         <TextField

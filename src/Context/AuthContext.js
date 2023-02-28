@@ -6,7 +6,7 @@ import {
   login,
   logoutHandler,
   signupAction,
-  updateUser
+  updateUser,
 } from "../actions/AuthActions";
 import { useReducer } from "react";
 import { AuthReducer } from "../reducers/AuthReducer";
@@ -67,8 +67,6 @@ const LoginContextProvider = (props) => {
   const updateUserCart = (data) => {
     updateUser(dispatch, data);
   };
-
-    
 
   // forms validation check
 
@@ -146,7 +144,10 @@ const LoginContextProvider = (props) => {
   };
 
   const canDo = (PostOwner, LoggedUser) => {
-    if (PostOwner === LoggedUser || userInfo?.capabilities?.includes("update")) {
+    if (
+      PostOwner === LoggedUser ||
+      userInfo?.capabilities?.includes("update")
+    ) {
       return true;
     }
     return false;

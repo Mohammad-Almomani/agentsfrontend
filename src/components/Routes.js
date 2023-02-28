@@ -45,18 +45,20 @@ function AppRoutes() {
               path="/signin/*"
               element={isAuthorized ? <Navigate to="/" /> : <SignIn />}
             />
-              <Route
-                path="/listItem/*"
-                element={isAuthorized ? <AddPostForm /> : <Navigate to="/signin" />}
-              />
-               <Route
-                path="/cart/*"
-                element={isAuthorized ? <MyCart /> : <Navigate to="/signin" />}
-              />
-                <Route
-                path="/favorite/*"
-                element={isAuthorized ? <MyFav /> : <Navigate to="/signin" />}
-              />
+            <Route
+              path="/listItem/*"
+              element={
+                isAuthorized ? <AddPostForm /> : <Navigate to="/signin" />
+              }
+            />
+            <Route
+              path="/cart/*"
+              element={isAuthorized ? <MyCart /> : <Navigate to="/signin" />}
+            />
+            <Route
+              path="/favorite/*"
+              element={isAuthorized ? <MyFav /> : <Navigate to="/signin" />}
+            />
             <Route
               path="/*"
               // element={isAuthorized ? <Post /> : <Navigate to="/signin" />}
