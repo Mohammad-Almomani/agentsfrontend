@@ -90,17 +90,6 @@ export default function EditItemModal(props) {
           <TextField
             margin="normal"
             fullWidth
-            name="description"
-            label="New Description (Optional)"
-            type="text"
-            id="description"
-            rows={3}
-            defaultValue={props.description}
-          />
-
-          <TextField
-            margin="normal"
-            fullWidth
             name="price"
             label="New price (Optional)"
             type="number"
@@ -138,6 +127,18 @@ export default function EditItemModal(props) {
             rows={3}
             placeholder={props.imgURL}
           />
+            
+                      <TextField
+                        margin="normal"
+                        fullWidth
+                        name="description"
+                        label="New Description (Optional)"
+                        type="text"
+                        id="description"
+                        multiline
+                        rows={3}
+                        defaultValue={props.description}
+                      />
 
           <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
             Submit

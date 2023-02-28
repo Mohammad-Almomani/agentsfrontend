@@ -1,5 +1,6 @@
 import axios from "axios";
 import cookies from "react-cookies";
+import Swal from "sweetalert2";
 import { actionType } from "../types/AuthActionTypes";
 
 export const login = (dispatch, payload) => {
@@ -35,7 +36,8 @@ export const logoutHandler = (dispatch) => {
 
 export const getUserProfile = async (dispatch) => {
   console.log("getting user profile");
-
+try {
+  
   await axios
     .get(`${process.env.REACT_APP_BACKEND}/profile`, {
       headers: {
@@ -46,6 +48,18 @@ export const getUserProfile = async (dispatch) => {
       dispatch({ type: actionType.GET_PROFILE, payload: res.data });
       console.log("done getting user info");
     });
+} catch (error) {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: "Something went wrong!",
+  });
+  console.log(error)
+  cookies.remove("userInfo");
+  cookies.remove("token");
+  cookies.remove("capabilities");
+  dispatch({ type: actionType.FAILED_LOGIN })
+}
 };
 
 export const signupAction = (dispatch, payload) => {

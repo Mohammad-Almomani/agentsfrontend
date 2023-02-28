@@ -88,6 +88,7 @@ export default function AddPostForm() {
           timer: 1500,
         });
         e.target.reset();
+        setCategory([]);
         gitPosts();
       })
       .catch((err) => {
@@ -136,6 +137,7 @@ export default function AddPostForm() {
           // input={<OutlinedInput label="Categories" />}
           MenuProps={MenuProps}
           fullWidth
+          required
         >
           {Catigo.map((name) => (
             <MenuItem

@@ -5,9 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import { Dropdown } from "react-bootstrap";
@@ -16,7 +14,7 @@ import { useLoginContext } from "../../Context/AuthContext";
 import { usePostContext } from "../../Context/PostsContext";
 import { deletePostAction } from "../../actions/PostsActions";
 import FullScreenModal from "./FullScreenModal";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { Button, Grid, IconButton, Tooltip } from "@mui/material";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -63,11 +61,11 @@ export default function ModalFather(props) {
     <div>
       <Card sx={{ maxWidth: 380 }}>
         <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="props.">
-              {props.title.charAt(0).toUpperCase() || "P"}
-            </Avatar>
-          }
+          // avatar={
+          //   <Avatar sx={{ bgcolor: red[500] }} aria-label="props.">
+          //     {props.title.charAt(0).toUpperCase() || "P"}
+          //   </Avatar>
+          // }
           action={
             <>
               {canDo(user.username, props.username) && (
@@ -93,9 +91,9 @@ export default function ModalFather(props) {
                     >
                       Delete Post
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleShow()}>
+                   { user.username === props.username && <Dropdown.Item onClick={() => handleShow()}>
                       Edit
-                    </Dropdown.Item>
+                    </Dropdown.Item>}
                   </Dropdown.Menu>
                 </Dropdown>
               )}
@@ -125,7 +123,7 @@ export default function ModalFather(props) {
           }
           title={props.title}
         />
-        By {props.username}
+       
         <CardMedia
           component="img"
           height="194"
@@ -134,46 +132,30 @@ export default function ModalFather(props) {
           onClick={() => handleShowFull()}
         />
         <CardContent sx={{textAlign:"left"}}>
-          <Typography variant="body2" color="text">
+
+          <Typography variant="body2" color="text" sx={{mt:2, mb: 1}}>
             Description: {props.description}
           </Typography>
-          <Typography variant="body2" color="text">
-            Price: {props.price}$
+        <Typography variant="body2" color="text" sx={{ mb: 1}}>
+        Seller: {props.username}
           </Typography>
 
           <Typography variant="body2" color="text">
             Tags: {props.category && props.category.join(", ")}
           </Typography>
+          <br />
+          <Typography variant="body" color="text">
+            <Grid   container
+                  justifyContent="space-between"
+                  // alignItems="space-around"
+                  spacing={1}
+                  >
+              <Grid item sm={8}>
+           <p style={{fontSize: "20px"}}> Price: {props.price}$</p>
 
-        </CardContent>
-        <CardActions disableSpacing></CardActions>
-        <Collapse in={true} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography style={{ fontWeight: "bolder" }} paragraph>
-              Comments:
-            </Typography>
-            {props.usersComments && (
-              <Typography paragraph style={{ textAlign: "left" }}>
-                {props.usersComments.map(
-                  (com, idx) =>
-                    idx < 3 && (
-                      // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                      <a style={{ display: "block" }} key={com.id}>
-                        {com.commentAuthor.toUpperCase()}: {com.comment}
-                      </a>
-                    )
-                )}
-              </Typography>
-            )}
-            {props.usersComments.length === 0 && <p>No Comments Here</p>}
+              </Grid>
+              <Grid item sm={3}>
 
-            <Button
-              variant="contained"
-              sx={{ mt: 3, mb: 2, marginRight: 5 }}
-              onClick={handleShowFull}
-            >
-              See More
-            </Button>
             {isAuthorized && (
               <>
                 {user?.cart?.includes(props.id) ? (
@@ -193,7 +175,6 @@ export default function ModalFather(props) {
                 )}
               </>
             )}
-
             {isAuthorized && (
               <>
                 {user?.favorite?.includes(props.id) ? (
@@ -211,6 +192,22 @@ export default function ModalFather(props) {
                 )}
               </>
             )}
+              </Grid>
+            </Grid>
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing></CardActions>
+        <Collapse in={true} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Button
+              variant="contained"
+              sx={{ mb: 2, marginRight: 7 }}
+              onClick={handleShowFull}
+            >
+              Learn More
+            </Button>
+            
+            
           </CardContent>
         </Collapse>
       </Card>

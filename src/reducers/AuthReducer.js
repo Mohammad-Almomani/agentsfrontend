@@ -28,6 +28,7 @@ export const AuthReducer = (state, action) => {
       return {
         ...state,
         userInfo: action.payload,
+        token: action.payload.token,
         capabilities: action.payload.capabilities,
         isAuthorized: true,
         notAuthed: false,
