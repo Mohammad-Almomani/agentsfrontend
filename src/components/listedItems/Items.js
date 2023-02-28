@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Button, Grid } from "@mui/material";
+import { Container } from "@mui/system";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -61,7 +62,7 @@ export default function Items() {
 
   return (
     <>
-      <FormControl sx={{ m: 1, width: 500 }}>
+    <FormControl sx={{ m: 1, width: 500 }}>
         <Grid container spacing={2}>
           <Grid item sm={6} xs={12}>
             <InputLabel id="demo-multiple-name-label">Categories</InputLabel>
@@ -98,20 +99,14 @@ export default function Items() {
         </Grid>
       </FormControl>
 
-      <Row
-        style={{ marginLeft: "7.5%" }}
-        xs={1}
-        sm={2}
-        md={2}
-        lg={3}
-        className="g-4"
-      >
+    <Container maxWidth="xl" >
+      <Grid container spacing={2} mt={5}>
         {post &&
           post.map((pos, idx) => {
             if (Category.length > 0) {
               if (Category.some((item) => pos.category.includes(item))) {
                 return (
-                  <Col key={idx}>
+                  <Grid item sm={6} md={4} xl={3} key={idx} >
                     <ModalFather
                       username={pos.username}
                       description={pos.description}
@@ -121,15 +116,16 @@ export default function Items() {
                       title={pos.title}
                       imgURL={pos.imgURL[0]}
                       category={pos.category}
+                      idx={idx}
                     />
-                  </Col>
+                  </Grid>
                 );
               } else {
                 return null;
               }
             } else {
               return (
-                <Col key={idx}>
+                <Grid item sm={6} md={4} xl={3} key={idx}>
                   <ModalFather
                     username={pos.username}
                     description={pos.description}
@@ -141,16 +137,18 @@ export default function Items() {
                     category={pos.category}
                     idx={idx}
                   />
-                </Col>
+                </Grid>
               );
             }
           })}
-      </Row>
+      </Grid>
       {/* eslint-disable  */}
       <a style={{ display: "block", marginTop: "2%" }}>
         You are done here? don't forget to
         {<Button onClick={handleSignOut}>Sign Out</Button>}
       </a>
+    </Container>
+  
     </>
   );
 }

@@ -45,12 +45,13 @@ export default function MyCart() {
                   container
                   justifyContent="center"
                   alignItems="center"
-                  spacing={3}
+                  spacing={1}
                 >
                   <Grid item lg={3}>
                     <CardMedia
                       component="img"
-                      sx={{ width: 170 }}
+                      sx={{ height: 150, width: 300 ,objectFit: "contain" }}
+                      
                       image={item.imgURL[0] || image}
                       alt="Item Image"
                     />

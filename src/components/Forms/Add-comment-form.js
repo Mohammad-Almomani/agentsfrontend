@@ -8,7 +8,7 @@ import { usePostContext } from "../../Context/PostsContext";
 
 export default function AddCommentForm(props) {
   const { user } = useLoginContext();
-  const { gitPosts, addedComment } = usePostContext();
+  const { addedComment } = usePostContext();
 
   const addComment = async (e) => {
     e.preventDefault();
@@ -23,7 +23,6 @@ export default function AddCommentForm(props) {
         `${process.env.REACT_APP_BACKEND}/comment`,
         comment
       );
-      console.log(qq.data);
       e.target.reset();
         addedComment(qq.data, props.idx);
       // gitPosts();
