@@ -10,14 +10,13 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Card } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import image from "../assets/img.jpg";
 import { red } from "@mui/material/colors";
 import AddCommentForm from "../Forms/Add-comment-form";
 import { useLoginContext } from "../../Context/AuthContext";
-import { usePostContext } from "../../Context/PostsContext";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CloseIcon from "@mui/icons-material/Close";
@@ -26,21 +25,10 @@ import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Container } from "@mui/system";
 
+
 export default function FullScreenModal(props) {
   const { isAuthorized } = useLoginContext();
   const { user, updateUserCart } = useLoginContext();
-  const { post } = usePostContext();
-  const [price, setPrice] = useState(0);
-
-  useEffect(() => {
-    let total = 0;
-    post?.map((item) => {
-      if (user?.cart?.includes(item.id)) {
-        total += item.price;
-      }
-    });
-    setPrice(total);
-  }, [user?.cart]);
 
   const addToFav = () => {
     let favorite = [...user?.favorite] || [];
@@ -51,6 +39,14 @@ export default function FullScreenModal(props) {
     }
     updateUserCart({ favorite: favorite });
   };
+
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    // scroll to bottom every you add a new comment
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [props]);
+
 
   const addToCart = () => {
     let cart = [...user?.cart] || [];
@@ -74,7 +70,6 @@ export default function FullScreenModal(props) {
         onHide={handleCloseFull}
         size="lg"
       >
-        {/* <Modal.Header closeButton></Modal.Header> */}
         <div>
           <Card sm={{ display: "flex" }}>
             <CardHeader
@@ -90,15 +85,11 @@ export default function FullScreenModal(props) {
             <Box sm={{ display: "flex", flexDirection: "auto" }}>
               <Grid
                 container
-                // justifyContent="center"
-
                 alignItems="center"
-                // spacing={3}
               >
                 <Grid item sm={5}>
                   <CardMedia
                     component="img"
-                    // sx={{ width: 170 }}
                     image={props.imgURL || image}
                     alt="Item Image"
                   />
@@ -113,7 +104,6 @@ export default function FullScreenModal(props) {
                       <Grid
                         container
                         justifyContent="space-between"
-                        // alignItems="space-around"
                         spacing={1}
                       >
                         <Grid item sm={8}>
@@ -174,6 +164,7 @@ export default function FullScreenModal(props) {
                           maxHeight: 200,
                           overflow: "auto",
                         }}
+                        
                       >
                         {props.usersComments.map((com, idx) => (
                           // eslint-disable-next-line jsx-a11y/anchor-is-valid
@@ -183,6 +174,7 @@ export default function FullScreenModal(props) {
                             alignItems="center"
                             sx={{ mb: 2 }}
                             key={idx}
+                            ref={bottomRef}
                           >
                             <Grid item sm={1}>
                               <Avatar
@@ -216,7 +208,7 @@ export default function FullScreenModal(props) {
                         ))}
                       </Container>
                     )}
-                    {props.usersComments.length === 0 && (
+                    {props.usersComments?.length === 0 && (
                       <p>No Comments Here</p>
                     )}
 
@@ -224,6 +216,7 @@ export default function FullScreenModal(props) {
                       <AddCommentForm
                         postID={props.id}
                         gitPosts={props.gitPosts}
+                        idx={props.idx}
                       />
                     )}
                   </CardContent>

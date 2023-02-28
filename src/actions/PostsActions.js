@@ -57,11 +57,11 @@ export const deletePostAction = async (id, gitPosts) => {
   });
 };
 
-export const gitPostsAction = async (dispatch) => {
+export const gitPostsAction = async (dispatch, post) => {
   const allPosts = await axios.get(`${process.env.REACT_APP_BACKEND}/post`, {
     headers: {
       Authorization: `Bearer ${cookies.load("token")}`,
     },
   });
-  dispatch({ type: actionType.FETCH_POSTS, payload: allPosts.data });
+  dispatch({ type: actionType.FETCH_POSTS, payload: allPosts.data, post });
 };

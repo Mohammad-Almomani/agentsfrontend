@@ -21,7 +21,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
-import EditItemModal from "./EditModalForm";
+import EditItemModal from "../Forms/EditModalForm";
 
 export default function ModalFather(props) {
   let [show, setShow] = useState(false);
@@ -114,6 +114,7 @@ export default function ModalFather(props) {
                 usersComments={props.usersComments}
                 username={props.username}
                 category={props.category}
+                idx={props.idx}
               />
             </>
           }
@@ -123,6 +124,8 @@ export default function ModalFather(props) {
         <CardMedia
           component="img"
           height="200"
+          style={{objectFit: "contain"}}
+          // objectFit="contain"
           image={props.imgURL ? props.imgURL : image}
           alt={`image of ${props.title}`}
           onClick={() => handleShowFull()}

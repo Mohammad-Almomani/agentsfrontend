@@ -4,7 +4,7 @@ import { Col, Image, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useLoginContext } from "../../Context/AuthContext";
 import { usePostContext } from "../../Context/PostsContext";
-import ModalFather from "../listedItems/ModalFather";
+import ModalFather from "../listedItems/ItemCard";
 import noFav from "./assets/noFav.png";
 
 export default function MyFav() {
@@ -24,7 +24,7 @@ export default function MyFav() {
                 id={item.id}
                 usersComments={item.usersComments}
                 title={item.title}
-                imgURL={item.imgURL}
+                imgURL={item.imgURL[0]}
                 category={item.category}
               />
             </Col>
