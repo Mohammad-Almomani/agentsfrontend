@@ -33,7 +33,7 @@ function Navbar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography data-testid="title" variant="h6" sx={{ my: 2 }}>
-        Agents on Clouds
+        Agents on Cloud Store
       </Typography>
       <Divider />
 
@@ -160,7 +160,7 @@ function Navbar(props) {
               textAlign: "start",
             }}
           >
-            Agents on Clouds
+            Agents on Cloud Store
           </Typography>
           {isAuthorized && (
             <Box sx={{ display: { xs: "none", sm: "block" } }}>

@@ -22,7 +22,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import EditItemModal from "../Forms/EditModalForm";
 
-export default function ModalFather(props) {
+export default function ItemCard(props) {
   let [show, setShow] = useState(false);
   let [showFull, setShowFull] = useState(false);
 
@@ -151,7 +151,7 @@ export default function ModalFather(props) {
                 <p style={{ fontSize: "20px" }}> Price: {props.price}$</p>
               </Grid>
               <Grid item sm={5}>
-                {isAuthorized && (
+                {isAuthorized && props.username !== user.username && (
                   <>
                     {user?.cart?.includes(props.id) ? (
                       <Tooltip title="Remove From Cart">

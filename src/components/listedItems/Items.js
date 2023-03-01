@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Col, Row } from "react-bootstrap";
-import ModalFather from "./ItemCard";
+import ItemCard from "./ItemCard";
 import { useLoginContext } from "../../Context/AuthContext";
 import { usePostContext } from "../../Context/PostsContext";
 import { useTheme } from "@mui/material/styles";
@@ -107,7 +106,7 @@ export default function Items() {
               if (Category.some((item) => pos.category.includes(item))) {
                 return (
                   <Grid item sm={6} md={4} xl={3} key={idx} >
-                    <ModalFather
+                    <ItemCard
                       username={pos.username}
                       description={pos.description}
                       price={pos.price}
@@ -126,7 +125,7 @@ export default function Items() {
             } else {
               return (
                 <Grid item sm={6} md={4} xl={3} key={idx}>
-                  <ModalFather
+                  <ItemCard
                     username={pos.username}
                     description={pos.description}
                     price={pos.price}

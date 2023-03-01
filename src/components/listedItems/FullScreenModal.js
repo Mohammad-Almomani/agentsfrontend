@@ -25,7 +25,6 @@ import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Container } from "@mui/system";
 
-
 export default function FullScreenModal(props) {
   const { isAuthorized } = useLoginContext();
   const { user, updateUserCart } = useLoginContext();
@@ -46,7 +45,6 @@ export default function FullScreenModal(props) {
     // scroll to bottom every you add a new comment
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [props]);
-
 
   const addToCart = () => {
     let cart = [...user?.cart] || [];
@@ -71,7 +69,7 @@ export default function FullScreenModal(props) {
         size="lg"
       >
         <div>
-          <Card sx={{ display: "flex" }}  >
+          <Card sx={{ display: "flex" }}>
             <CardHeader
               action={
                 <Tooltip title="Remove From Cart">
@@ -83,11 +81,7 @@ export default function FullScreenModal(props) {
             />
 
             <Box sm={{ display: "flex", flexDirection: "auto" }}>
-              <Grid
-                container
-                alignItems="center"
-                spacing={1}
-              >
+              <Grid container alignItems="center" spacing={1}>
                 <Grid item md={6} sm={12}>
                   <CardMedia
                     component="img"
@@ -99,7 +93,12 @@ export default function FullScreenModal(props) {
                   />
                 </Grid>
 
-                <Grid item md={6} sm={12} style={{ fontSize: "20px", marginLeft: "0" }}>
+                <Grid
+                  item
+                  md={6}
+                  sm={12}
+                  style={{ fontSize: "20px", marginLeft: "0" }}
+                >
                   <Grid item>Item: {props.title}</Grid>
                   <Grid item>Description: {props.description}</Grid>
                   <Grid item>Seller: {props.username}</Grid>
@@ -117,7 +116,7 @@ export default function FullScreenModal(props) {
                           </p>
                         </Grid>
                         <Grid item sm={5}>
-                          {isAuthorized && (
+                          {isAuthorized && props.username !== user.username && (
                             <>
                               {user?.cart?.includes(props.id) ? (
                                 <Tooltip title="Remove From Cart">
@@ -132,22 +131,23 @@ export default function FullScreenModal(props) {
                                   </IconButton>
                                 </Tooltip>
                               )}
-                              {isAuthorized && (
-                                <>
-                                  {user?.favorite?.includes(props.id) ? (
-                                    <Tooltip title="Remove From Fav">
-                                      <IconButton onClick={addToFav}>
-                                        <FavoriteIcon sx={{ color: "red" }} />
-                                      </IconButton>
-                                    </Tooltip>
-                                  ) : (
-                                    <Tooltip title="Add to Fav">
-                                      <IconButton onClick={addToFav}>
-                                        <FavoriteBorderIcon />
-                                      </IconButton>
-                                    </Tooltip>
-                                  )}
-                                </>
+                            </>
+                          )}
+
+                          {isAuthorized && (
+                            <>
+                              {user?.favorite?.includes(props.id) ? (
+                                <Tooltip title="Remove From Fav">
+                                  <IconButton onClick={addToFav}>
+                                    <FavoriteIcon sx={{ color: "red" }} />
+                                  </IconButton>
+                                </Tooltip>
+                              ) : (
+                                <Tooltip title="Add to Fav">
+                                  <IconButton onClick={addToFav}>
+                                    <FavoriteBorderIcon />
+                                  </IconButton>
+                                </Tooltip>
                               )}
                             </>
                           )}
@@ -168,7 +168,6 @@ export default function FullScreenModal(props) {
                           maxHeight: 200,
                           overflow: "auto",
                         }}
-                        
                       >
                         {props.usersComments.map((com, idx) => (
                           // eslint-disable-next-line jsx-a11y/anchor-is-valid

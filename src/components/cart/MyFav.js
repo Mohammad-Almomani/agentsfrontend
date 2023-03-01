@@ -1,10 +1,10 @@
 import { Button, Container, Grid } from "@mui/material";
 import React from "react";
-import { Col, Image, Row } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useLoginContext } from "../../Context/AuthContext";
 import { usePostContext } from "../../Context/PostsContext";
-import ModalFather from "../listedItems/ItemCard";
+import ItemCard from "../listedItems/ItemCard";
 import noFav from "./assets/noFav.png";
 
 export default function MyFav() {
@@ -20,7 +20,7 @@ export default function MyFav() {
         if (user?.favorite?.includes(item.id)) {
           return (
             <Grid item sm={6} md={4} xl={3} key={idx} >
-              <ModalFather
+              <ItemCard
                 username={item.username}
                 description={item.description}
                 price={item.price}
@@ -29,6 +29,7 @@ export default function MyFav() {
                 title={item.title}
                 imgURL={item.imgURL[0]}
                 category={item.category}
+                idx={idx}
               />
             </Grid>
           );
