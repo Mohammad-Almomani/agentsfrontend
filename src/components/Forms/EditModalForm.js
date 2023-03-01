@@ -32,7 +32,7 @@ const MenuProps = {
 export default function EditItemModal(props) {
   const { user } = useLoginContext();
   const { gitPosts } = usePostContext();
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState(false);
 
   const id = props.id;
   const handleClose = () => {
@@ -45,13 +45,16 @@ export default function EditItemModal(props) {
       title: e.target.title.value || props.title,
       description: e.target.description.value || props.description,
       price: e.target.price.value || props.price,
-      imgURL: image,
+      // imgURL: image,
       username: user.username,
       // stringy the array so the multer doesn't destroy it
       category: JSON.stringify(Category),
       userID: user.id,
     };
-    // if (!image) delete post.imgURL;
+    if (image) {
+      post.imgURL = image
+      post.imgUpdate = true
+    };
     console.log(post);
     editPostAction(id, post, gitPosts);
     e.target.reset();
