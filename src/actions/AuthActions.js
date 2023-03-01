@@ -66,7 +66,7 @@ export const signupAction = (dispatch, payload) => {
     axios
       .post(`${process.env.REACT_APP_BACKEND}/signup`, payload)
       .then((res) => {
-        console.log(res.data.user);
+        console.log(res.data.username);
         cookies.save("token", res.data.token);
         cookies.save("capabilities", JSON.stringify(res.data.capabilities));
         cookies.save("userInfo", JSON.stringify(res.data));

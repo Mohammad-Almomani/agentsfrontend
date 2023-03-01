@@ -12,7 +12,7 @@ export default function MyFav() {
   const { post } = usePostContext();
 
   return (
-    <Container maxWidth="xl"  justifyContent="center" alignItems="center">
+    <Container maxWidth="xl" >
       <h1> My Favorite</h1>
     <Grid container spacing={2} mt={5}>
 

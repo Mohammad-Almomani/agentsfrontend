@@ -6,7 +6,6 @@ import Modal from "react-bootstrap/Modal";
 import { useLoginContext } from "../../Context/AuthContext";
 import { usePostContext } from "../../Context/PostsContext";
 import { editPostAction } from "../../actions/PostsActions";
-import { useTheme } from "@emotion/react";
 
 const Catigo = [
   "Electronics",
@@ -33,7 +32,7 @@ const MenuProps = {
 export default function EditItemModal(props) {
   const { user } = useLoginContext();
   const { gitPosts } = usePostContext();
-  const [image, setImage] = useState(false);
+  const [image, setImage] = useState({});
 
   const id = props.id;
   const handleClose = () => {
@@ -52,7 +51,8 @@ export default function EditItemModal(props) {
       category: JSON.stringify(Category),
       userID: user.id,
     };
-    if (!image) delete post.imgURL;
+    // if (!image) delete post.imgURL;
+    console.log(post);
     editPostAction(id, post, gitPosts);
     e.target.reset();
     handleClose();
