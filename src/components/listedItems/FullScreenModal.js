@@ -10,7 +10,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import image from "../assets/img.jpg";
@@ -32,6 +32,13 @@ export default function FullScreenModal(props) {
   const { post } = usePostContext();
   const [price, setPrice] = useState(0);
 
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    //  scroll to bottom every time the comments change
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [props?.usersComments]);
+
   useEffect(() => {
     let total = 0;
     post?.map((item) => {
@@ -41,6 +48,8 @@ export default function FullScreenModal(props) {
     });
     setPrice(total);
   }, [user?.cart]);
+
+
 
   const addToFav = () => {
     let favorite = [...user?.favorite] || [];
@@ -74,7 +83,6 @@ export default function FullScreenModal(props) {
         onHide={handleCloseFull}
         size="lg"
       >
-        {/* <Modal.Header closeButton></Modal.Header> */}
         <div>
           <Card sm={{ display: "flex" }}>
             <CardHeader
@@ -95,7 +103,7 @@ export default function FullScreenModal(props) {
                 alignItems="center"
                 // spacing={3}
               >
-                <Grid item sm={5}>
+                <Grid item sm={6}>
                   <CardMedia
                     component="img"
                     // sx={{ width: 170 }}
@@ -104,7 +112,7 @@ export default function FullScreenModal(props) {
                   />
                 </Grid>
 
-                <Grid item sm={7} style={{ fontSize: "20px" }}>
+                <Grid item sm={6} style={{ fontSize: "20px" }}>
                   <Grid item>Item: {props.title}</Grid>
                   <Grid item>Description: {props.description}</Grid>
                   <Grid item>Seller: {props.username}</Grid>
@@ -163,7 +171,7 @@ export default function FullScreenModal(props) {
                   </Grid>
                 </Grid>
                 <Grid item sm={12}>
-                  <CardContent>
+                  <CardContent >
                     <Typography style={{ fontWeight: "bolder" }} paragraph>
                       Comments:
                     </Typography>
@@ -174,6 +182,7 @@ export default function FullScreenModal(props) {
                           maxHeight: 200,
                           overflow: "auto",
                         }}
+                       
                       >
                         {props.usersComments.map((com, idx) => (
                           // eslint-disable-next-line jsx-a11y/anchor-is-valid
@@ -183,6 +192,7 @@ export default function FullScreenModal(props) {
                             alignItems="center"
                             sx={{ mb: 2 }}
                             key={idx}
+                            ref={bottomRef} 
                           >
                             <Grid item sm={1}>
                               <Avatar
@@ -224,6 +234,7 @@ export default function FullScreenModal(props) {
                       <AddCommentForm
                         postID={props.id}
                         gitPosts={props.gitPosts}
+                        idx={props.idx}
                       />
                     )}
                   </CardContent>
